@@ -1,0 +1,33 @@
+﻿@inherits LFDropDownBase
+
+@using Lookif.Component.DropDown.Complex
+@using Lookif.Component.DropDown.Basic
+@if (SanitizedRecords == null)
+{
+    <p>
+        <em>لیستی موجود نیست</em>
+    </p>
+}
+else
+{
+    if (Multiple)
+    {
+        <LFDropDownMultipleChoice 
+                        SelectedOption="@SelectedOption"
+                        Records="@Records"
+                        Key="@Key"
+                        Value="@Value"
+                        PerformUpdate="PerformUpdate"></LFDropDownMultipleChoice>
+    }
+    else
+    {
+        <LFDropDownSingleChoice 
+                        SelectedOption="@SelectedOption"
+                        Records="@Records"
+                        Key="@Key"
+                        Value="@Value"
+                        PerformUpdate="PerformUpdate"></LFDropDownSingleChoice>
+    }
+
+
+}

@@ -1,0 +1,40 @@
+﻿
+@inherits LFDropDownMultipleChoiceBase
+<div class="DropDownContainer">
+    <span class="select2 select2-container select2-container--default select2-container--below" style="width: 100%;">
+        <span class="selection d-flex" style="width: 100%;">
+            <div class="select2-selection select2-selection--multiple" @onclick="Toggle" @onclick:stopPropagation="true" style="width: 100%;display:flex;flex-direction:row;position:relative">
+                <ul class="select2-selection__rendered m-0" @onclick:stopPropagation="true">
+                    @foreach (var record in SelectedRecords)
+                    {
+                        <li class="select2-selection__choice">
+                            <div class="select2-selection__choice__remove" title="Remove item" aria-label="Remove item">
+                                <span aria-hidden="true" @onclick="()=> SelectOption(record.Key,false)">×</span>
+                            </div><span class="select2-selection__choice__display">@record.Content</span>
+                        </li>
+                    }
+
+
+                </ul>
+                <span class="select2-search select2-search--inline" style="display: inline;width: auto;flex: auto;">
+                    <input   @bind-value="inputText" @oninput="(e)=> inputText = e.Value.ToString()" type="text" class="select2-search__field m-0" style="width: 100%;" />
+                </span>
+                
+                <div class="arrow_circle ">
+                    <div class="arrow"></div>
+                </div>
+            </div>
+            <span class='DropDownDataList  select2-dropdown select2-dropdown--above @(Show ? "d-block":"d-none")' dir="ltr">
+                <span class="select2-results">
+                    <ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="select2-e3sq-results" aria-expanded="true" aria-hidden="false">
+                        @foreach (var record in FilteredRecords)
+                        {
+                            <li class="select2-results__option select2-results__option--selectable select2-results__option--highlighted" id="select2-e3sq-result-zcr5-orange" role="option" @onclick="()=>SelectOption(record.Key,true)" aria-selected="true">@record.Content</li>
+
+                        }
+                    </ul>
+                </span>
+            </span>
+        </span>
+    </span>
+</div>
