@@ -79,13 +79,17 @@ public class DropDownBase : ComponentBase
             Bind();
 
     }
+
     protected async override Task OnParametersSetAsync()
     {
-        objRef = DotNetObjectReference.Create(this);
-        if (_jSRuntime is not null)
-        {
-            _lFDropDownJSInterop = new LFDropDownJSInterop(_jSRuntime);
+        if (firstRender || _lFDropDownJSInterop is null)
+        { 
+            objRef = DotNetObjectReference.Create(this);
+            if (_jSRuntime is not null)
+            {
+                _lFDropDownJSInterop = new LFDropDownJSInterop(_jSRuntime);
 
+            }
         }
     }
     public virtual async void SelectOption(string key, bool status)
