@@ -1,5 +1,4 @@
 ﻿
-using Lookif.Component.DropDown.Main;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -25,7 +24,7 @@ public class DropDownBase : ComponentBase
             var DropDownValue = targetObject.ToString();
 
             property = Record.GetType().GetProperty(Key);
-            var DropDownKey = (string)property.GetValue(Record, null);
+            var DropDownKey =  property.GetValue(Record, null).ToString();
             if (!SanitizedRecords.Any(x => x.Key.Equals(DropDownKey)))
                 SanitizedRecords.Add(new DropdownContextHolder<string>(DropDownValue, DropDownKey));
         }
@@ -41,8 +40,7 @@ public class DropDownBase : ComponentBase
 
 
         ConvertToDropdownContextHolder(Records);
-        ShowAlreadySelectedOptions(SelectedOption);
-
+       
     }
 
     private void ShowAlreadySelectedOptions(List<string> selectedOption)
@@ -67,31 +65,36 @@ public class DropDownBase : ComponentBase
     {
         Identity = Guid.NewGuid();
     }
-    public async void NameChanged(string value)
+    public  void NameChanged(string value)
     {
         FilteredRecords = SanitizedRecords.Where(x => x.Content.Trim().ToLower().Contains(value.Trim().ToLower())).ToList();
 
     }
 
-    protected override void OnParametersSet()
+    //protected override void OnParametersSet()
+    //{
+    //    if (firstRender)
+    //    {
+            
+    //        StateHasChanged();
+    //    }
+    //}
+    protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
+        {
             Bind();
-
-    }
-
-    protected async override Task OnParametersSetAsync()
-    {
-        if (firstRender || _lFDropDownJSInterop is null)
-        { 
             objRef = DotNetObjectReference.Create(this);
             if (_jSRuntime is not null)
             {
                 _lFDropDownJSInterop = new LFDropDownJSInterop(_jSRuntime);
 
             }
+            ShowAlreadySelectedOptions(SelectedOption);
+            StateHasChanged();
         }
     }
+   
     public virtual async void SelectOption(string key, bool status)
     {
         if (SanitizedRecords is { Count: < 1 })
@@ -101,9 +104,6 @@ public class DropDownBase : ComponentBase
         FilteredRecords = SanitizedRecords;
         SelectedOption = SelectedRecords.Select(x => x.Key).ToList();
         await PerformUpdate.Invoke(SelectedOption);
-        //ReturnValue =new ();
-        //ReturnValue = SelectedOption;
-        //await ReturnValueChanged.InvokeAsync(ReturnValue);
 
         await Toggle();
     }
@@ -112,6 +112,8 @@ public class DropDownBase : ComponentBase
     [JSInvokable("Toggle")]
     public async Task Toggle()
     {
+        if (Disable)
+            return;
         this.Show = !this.Show;
         await _lFDropDownJSInterop.SetOrUnsetInstance(objRef, Identity, Show);
         StateHasChanged();
@@ -168,7 +170,9 @@ public class DropDownBase : ComponentBase
     [Parameter] public Update PerformUpdate { get; set; }
     [Parameter] public List<string> SelectedOption { get; set; }
     [Parameter] public bool Multiple { get; set; }
+    [Parameter] public bool Disable { get; set; } = false;
     [Parameter] public EventCallback<List<string>> ReturnValueChanged { get; set; }
+     
 
 
     [Parameter]
