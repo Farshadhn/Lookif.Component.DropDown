@@ -70,15 +70,7 @@ public class DropDownBase : ComponentBase
         FilteredRecords = SanitizedRecords.Where(x => x.Content.Trim().ToLower().Contains(value.Trim().ToLower())).ToList();
 
     }
-
-    //protected override void OnParametersSet()
-    //{
-    //    if (firstRender)
-    //    {
-            
-    //        StateHasChanged();
-    //    }
-    //}
+     
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
@@ -122,9 +114,9 @@ public class DropDownBase : ComponentBase
 
     #region ...Definition...
 
-    public List<DropdownContextHolder<string>> SanitizedRecords { get; set; } = new();
-    public List<DropdownContextHolder<string>> FilteredRecords { get; set; } = new();
-    public List<DropdownContextHolder<string>> SelectedRecords { get; set; } = new();
+    public List<DropdownContextHolder<string>> SanitizedRecords { get; set; } = [];
+    public List<DropdownContextHolder<string>> FilteredRecords { get; set; } = [];
+    public List<DropdownContextHolder<string>> SelectedRecords { get; set; } = [];
     public bool Show { get; set; } = false;
 
 

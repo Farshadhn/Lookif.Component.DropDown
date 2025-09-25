@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lookif.Component.DropDown", "Lookif.Component.DropDown\Lookif.Component.DropDown.csproj", "{97959875-DB26-4DD1-951D-AC68D09A4761}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDropDown", "TestDropDown\TestDropDown.csproj", "{85286736-C362-4667-BAE0-3AF1A83CE07A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +17,15 @@ Global
 		{97959875-DB26-4DD1-951D-AC68D09A4761}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97959875-DB26-4DD1-951D-AC68D09A4761}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97959875-DB26-4DD1-951D-AC68D09A4761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85286736-C362-4667-BAE0-3AF1A83CE07A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85286736-C362-4667-BAE0-3AF1A83CE07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85286736-C362-4667-BAE0-3AF1A83CE07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85286736-C362-4667-BAE0-3AF1A83CE07A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8A2A8816-2867-4844-8DCC-5DA90D5DD0F4}
+		StartupProject = {3E704B46-439B-807F-7363-C13959FB6F50}
 	EndGlobalSection
 EndGlobal
