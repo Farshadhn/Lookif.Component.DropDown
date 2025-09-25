@@ -1,40 +1,47 @@
-﻿
-@inherits LFDropDownMultipleChoiceBase
-<div class="DropDownContainer">
-    <span class="container container--default container--below" style="width: 100%;">
-        <span class="selection d-flex" style="width: 100%;">
-            <div class='selection selection--multiple @(Disable ?"disabled":"")' @onclick="Toggle" @onclick:stopPropagation="true" style="width: 100%;display:flex;flex-direction:row;position:relative">
-                <ul class="selection__rendered m-0" @onclick:stopPropagation="true">
+﻿@inherits LFDropDownMultipleChoiceBase
+<div class="dropdown-container">
+    <div class="dropdown-wrapper">
+        <div class="dropdown-selection">
+            <div class="dropdown-input-area @(Disable ? "disabled" : "")" 
+                 @onclick="Toggle" 
+                 @onclick:stopPropagation="true">
+                <ul class="selected-items" @onclick:stopPropagation="true">
                     @foreach (var record in SelectedRecords)
                     {
-                        <li class="selection__choice">
-                            <div class="selection__choice__remove" title="Remove item" aria-label="Remove item">
-                                <span aria-hidden="true" @onclick="()=> SelectOption(record.Key,false)">×</span>
-                            </div><span class="selection__choice__display">@record.Content</span>
+                        <li class="selected-item">
+                            <span class="item-remove" 
+                                  title="Remove item" 
+                                  aria-label="Remove item"
+                                  @onclick="() => SelectOption(record.Key, false)">
+                                ×
+                            </span>
+                            <span class="item-text">@record.Content</span>
                         </li>
                     }
-
-
                 </ul>
-                <span class="search search--inline" style="display: inline;width: auto;flex: auto;">
-                    <input disabled=@(Disable) @bind-value="inputText" @oninput="(e)=> inputText = e.Value.ToString()" type="text" class="search__field m-0" style="width: 100%;" />
-                </span>
-                
-                <div class="arrow_circle ">
-                    <div class="arrow"></div>
+                <div class="search-container">
+                    <input disabled="@Disable" 
+                           @bind-value="inputText" 
+                           @oninput="(e) => inputText = e.Value.ToString()" 
+                           type="text" 
+                           class="search-input" />
+                </div>
+                <div class="dropdown-arrow">
+                    <div class="arrow-icon"></div>
                 </div>
             </div>
-            <span class='DropDownDataList  dropdown dropdown--above @(Show ? "d-block":"d-none")' dir="ltr">
-                <span class="results">
-                    <ul class="results__options" role="listbox" aria-multiselectable="true" id="e3sq-results" aria-expanded="true" aria-hidden="false">
-                        @foreach (var record in FilteredRecords)
-                        {
-                            <li class="results__option results__option--selectable results__option--highlighted" id="e3sq-result-zcr5-orange" role="option" @onclick="()=>SelectOption(record.Key,true)" aria-selected="true">@record.Content</li>
-
-                        }
-                    </ul>
-                </span>
-            </span>
-        </span>
-    </span>
+            <div class="dropdown-list @(Show ? "show" : "hide")">
+                <ul class="options-list" role="listbox">
+                    @foreach (var record in FilteredRecords)
+                    {
+                        <li class="option-item" 
+                            role="option" 
+                            @onclick="async () => await SelectOption(record.Key, true)">
+                            @record.Content
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

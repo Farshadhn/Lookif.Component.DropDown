@@ -87,7 +87,7 @@ public class DropDownBase : ComponentBase
         }
     }
    
-    public virtual async void SelectOption(string key, bool status)
+    public virtual async Task SelectOption(string key, bool status)
     {
         if (SanitizedRecords is { Count: < 1 })
             return;
@@ -97,7 +97,11 @@ public class DropDownBase : ComponentBase
         SelectedOption = SelectedRecords.Select(x => x.Key).ToList();
         await PerformUpdate.Invoke(SelectedOption);
 
-        await Toggle();
+        // For single choice dropdowns, close the dropdown after selection
+        if (!Multiple)
+        {
+            await CloseDropdown();
+        }
     }
 
 
@@ -109,6 +113,24 @@ public class DropDownBase : ComponentBase
         this.Show = !this.Show;
         await _lFDropDownJSInterop.SetOrUnsetInstance(objRef, Identity, Show);
         StateHasChanged();
+    }
+
+    public async Task CloseDropdown()
+    {
+        if (Disable)
+            return;
+        this.Show = false;
+        if (_lFDropDownJSInterop != null)
+        {
+            await _lFDropDownJSInterop.SetOrUnsetInstance(objRef, Identity, false);
+        }
+        StateHasChanged();
+    }
+
+    // Synchronous wrapper for Razor event handlers
+    public void SelectOptionSync(string key, bool status)
+    {
+        _ = Task.Run(async () => await SelectOption(key, status));
     }
     #endregion
 

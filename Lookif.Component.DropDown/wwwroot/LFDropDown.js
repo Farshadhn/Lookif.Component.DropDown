@@ -21,7 +21,7 @@ function removeItemOnce(arr, identity) {
 
 
 $(document).click(function (e) {
-    if (!$(e.target).hasClass("DropDownContainer") && $(e.target).closest(".DropDownContainer").length === 0) {
+    if (!$(e.target).hasClass("dropdown-container") && $(e.target).closest(".dropdown-container").length === 0) {
         $.each(window.LFDropDowns, function (key, value) {
             value.instance.invokeMethodAsync('Toggle');
 
