@@ -12,22 +12,28 @@ else
 {
     if (Multiple)
     {
-        <LFDropDownMultipleChoice Disable=Disable
-                        SelectedOption="@SelectedOption"
-                        Records="@Records"
-                        Key="@Key"
-                        Value="@Value"
-                        PerformUpdate="PerformUpdate"></LFDropDownMultipleChoice>
+        <LFDropDownMultipleChoice EnumType=EnumType
+                                  UseEnumDisplayNames=UseEnumDisplayNames
+                                  Disable=Disable
+                                  IsRTL=IsRTL
+                                  SelectedOption="@SelectedOption"
+                                  Records="@Records"
+                                  Key="@Key"
+                                  Value="@Value"
+                                  PerformUpdate="PerformUpdate"></LFDropDownMultipleChoice>
     }
     else
     {
-        
-        <LFDropDownSingleChoice Disable=Disable
-                        SelectedOption="@SelectedOption"
-                        Records="@Records"
-                        Key="@Key"
-                        Value="@Value"
-                        PerformUpdate="PerformUpdate"></LFDropDownSingleChoice>
+
+        <LFDropDownSingleChoice EnumType=EnumType
+                                UseEnumDisplayNames=UseEnumDisplayNames
+                                IsRTL=IsRTL
+                                Disable=Disable
+                                SelectedOption="@SelectedOption"
+                                Records="@Records"
+                                Key="@Key"
+                                Value="@Value"
+                                PerformUpdate="PerformUpdate"></LFDropDownSingleChoice>
     }
 
 

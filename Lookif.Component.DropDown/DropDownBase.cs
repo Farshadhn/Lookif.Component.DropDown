@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Lookif.Component.DropDown;
 
@@ -31,16 +33,61 @@ public class DropDownBase : ComponentBase
         FilteredRecords = SanitizedRecords;
     }
 
+    public void ConvertEnumToDropdownContextHolder()
+    {
+        if (EnumType == null || !EnumType.IsEnum)
+            return;
+
+        SanitizedRecords = new();
+        var enumValues = Enum.GetValues(EnumType);
+        
+        foreach (var enumValue in enumValues)
+        {
+            var enumName = enumValue.ToString();
+            var displayName = GetEnumDisplayName(enumValue);
+            var key = ((int)enumValue).ToString();
+            
+            SanitizedRecords.Add(new DropdownContextHolder<string>(displayName, key));
+        }
+        FilteredRecords = SanitizedRecords;
+    
+    }
+
+    private string GetEnumDisplayName(object enumValue)
+    {
+        if (!UseEnumDisplayNames)
+            return enumValue.ToString();
+
+        var field = enumValue.GetType().GetField(enumValue.ToString());
+        if (field == null)
+            return enumValue.ToString();
+
+        var displayAttribute = field.GetCustomAttribute<DisplayNameAttribute>();
+        if (displayAttribute != null)
+            return displayAttribute.DisplayName;
+
+        var descriptionAttribute = field.GetCustomAttribute<DescriptionAttribute>();
+        if (descriptionAttribute != null)
+            return descriptionAttribute.Description;
+
+        return enumValue.ToString();
+    }
+
     public void Bind()
     {
         firstRender = false;
 
+        // Check if using enum
+        if (EnumType != null && EnumType.IsEnum)
+        {
+            ConvertEnumToDropdownContextHolder();
+            return;
+        }
+
         if (Records is null or { Count: < 1 })
             return;
 
-
         ConvertToDropdownContextHolder(Records);
-       
     }
 
     private void ShowAlreadySelectedOptions(List<string> selectedOption)
@@ -132,6 +179,57 @@ public class DropDownBase : ComponentBase
     {
         _ = Task.Run(async () => await SelectOption(key, status));
     }
+
+    // RTL/LTR Helper methods
+    public string GetTextDirection()
+    {
+        return IsRTL ? "rtl" : "ltr";
+    }
+
+    public string GetDirectionClass()
+    {
+        return IsRTL ? "rtl" : "ltr";
+    }
+
+    public string GetArrowPosition()
+    {
+        return IsRTL ? "left" : "right";
+    }
+
+    // Enum Helper methods
+    public bool IsUsingEnum()
+    {
+        return EnumType != null && EnumType.IsEnum;
+    }
+
+    public string GetEnumDisplayName<T>(T enumValue) where T : Enum
+    {
+        if (!UseEnumDisplayNames)
+            return enumValue.ToString();
+
+        var field = enumValue.GetType().GetField(enumValue.ToString());
+        if (field == null)
+            return enumValue.ToString();
+
+        var displayAttribute = field.GetCustomAttribute<DisplayNameAttribute>();
+        if (displayAttribute != null)
+            return displayAttribute.DisplayName;
+
+        var descriptionAttribute = field.GetCustomAttribute<DescriptionAttribute>();
+        if (descriptionAttribute != null)
+            return descriptionAttribute.Description;
+
+        return enumValue.ToString();
+    }
+
+    public T GetEnumValue<T>(string key) where T : Enum
+    {
+        if (int.TryParse(key, out int intValue))
+        {
+            return (T)Enum.ToObject(typeof(T), intValue);
+        }
+        return default(T);
+    }
     #endregion
 
     #region ...Definition...
@@ -186,6 +284,13 @@ public class DropDownBase : ComponentBase
     [Parameter] public bool Multiple { get; set; }
     [Parameter] public bool Disable { get; set; } = false;
     [Parameter] public EventCallback<List<string>> ReturnValueChanged { get; set; }
+    
+    // RTL/LTR Support
+    [Parameter] public bool IsRTL { get; set; } = true;
+    
+    // Enum Support
+    [Parameter] public Type? EnumType { get; set; }
+    [Parameter] public bool UseEnumDisplayNames { get; set; } = true;
      
 
 

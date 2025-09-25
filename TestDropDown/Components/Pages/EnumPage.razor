@@ -1,0 +1,191 @@
+@page "/enum"
+@using Lookif.Component.DropDown.Main
+@using Lookif.Component.DropDown.Basic
+@using Lookif.Component.DropDown.Complex
+<PageTitle>Enum Support Dropdown</PageTitle>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Enum Support Dropdown</h1>
+    <p class="text-center text-muted mb-4">Demonstrating automatic enum binding with custom display names</p>
+
+    <!-- Enum Support Demonstration Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>🔢 Enum Support Demonstration</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Priority Enum</h5>
+                            <p class="text-muted">Single choice with custom descriptions</p>
+                            <LFDropDown EnumType="typeof(Priority)"
+                                        UseEnumDisplayNames="true"
+                                        SelectedOption="@prioritySelectedOptions"
+                                        ReturnValueChanged="@OnPrioritySelectionChanged" />
+                            <small class="text-muted">Selected: @(prioritySelectedText ?? "None")</small>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Status Enum</h5>
+                            <p class="text-muted">Single choice with descriptions</p>
+                            <LFDropDown EnumType="typeof(Status)"
+                                        UseEnumDisplayNames="true"
+                                        SelectedOption="@statusSelectedOptions"
+                                        ReturnValueChanged="@OnStatusSelectionChanged" />
+                            <small class="text-muted">Selected: @(statusSelectedText ?? "None")</small>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>User Role Enum</h5>
+                            <p class="text-muted">Single choice with descriptions</p>
+                            <LFDropDown EnumType="typeof(UserRole)"
+                                        UseEnumDisplayNames="true"
+                                        SelectedOption="@roleSelectedOptions"
+                                        ReturnValueChanged="@OnRoleSelectionChanged" />
+                            <small class="text-muted">Selected: @(roleSelectedText ?? "None")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RTL/LTR with Enums -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>🌍 RTL/LTR with Enums</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Priority Enum with RTL</h5>
+                            <p class="text-muted">RTL mode with enum binding</p>
+                            <LFDropDown EnumType="typeof(Priority)"
+                                        UseEnumDisplayNames="true"
+                                        IsRTL="true"
+                                        SelectedOption="@rtlPrioritySelectedOptions"
+                                        ReturnValueChanged="@OnRTLPrioritySelectionChanged" />
+                            <small class="text-muted">Selected: @(rtlPrioritySelectedText ?? "None")</small>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Status Enum with LTR</h5>
+                            <p class="text-muted">LTR mode with enum binding</p>
+                            <LFDropDown EnumType="typeof(Status)"
+                                        UseEnumDisplayNames="true"
+                                        IsRTL="false"
+                                        SelectedOption="@ltrStatusSelectedOptions"
+                                        ReturnValueChanged="@OnLTRStatusSelectionChanged" />
+                            <small class="text-muted">Selected: @(ltrStatusSelectedText ?? "None")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multiple Choice with Enums -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>📋 Multiple Choice with Enums</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>User Roles (Multiple Selection)</h5>
+                            <p class="text-muted">Select multiple user roles</p>
+                            <LFDropDown Multiple="true"
+                                        EnumType="typeof(UserRole)"
+                                        UseEnumDisplayNames="true"
+                                        SelectedOption="@multipleRoleSelectedOptions"
+                                        ReturnValueChanged="@OnMultipleRoleSelectionChanged" />
+                            <small class="text-muted">Selected: @(multipleRoleSelectedText ?? "None")</small>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Priorities (Multiple Selection)</h5>
+                            <p class="text-muted">Select multiple priorities</p>
+                            <LFDropDown Multiple="true"
+                                        EnumType="typeof(Priority)"
+                                        UseEnumDisplayNames="true"
+                                        SelectedOption="@multiplePrioritySelectedOptions"
+                                        ReturnValueChanged="@OnMultiplePrioritySelectionChanged" />
+                            <small class="text-muted">Selected: @(multiplePrioritySelectedText ?? "None")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Code Examples</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Basic Enum Usage:</h5>
+                    <pre><code>&lt;LFDropDown EnumType="typeof(Priority)"
+           UseEnumDisplayNames="true"
+           SelectedOption="@prioritySelectedOptions"
+           ReturnValueChanged="@OnPrioritySelectionChanged" /&gt;</code></pre>
+
+                    <h5>Enum with RTL/LTR:</h5>
+                    <pre><code>&lt;LFDropDown EnumType="typeof(Priority)"
+           UseEnumDisplayNames="true"
+           IsRTL="true"
+           SelectedOption="@rtlPrioritySelectedOptions"
+           ReturnValueChanged="@OnRTLPrioritySelectionChanged" /&gt;</code></pre>
+
+                    <h5>Multiple Choice with Enum:</h5>
+                    <pre><code>&lt;LFDropDown Multiple="true"
+           EnumType="typeof(UserRole)"
+           UseEnumDisplayNames="true"
+           SelectedOption="@multipleRoleSelectedOptions"
+           ReturnValueChanged="@OnMultipleRoleSelectionChanged" /&gt;</code></pre>
+
+                    <h5>Enum Definition with Custom Descriptions:</h5>
+                    <pre><code>public enum Priority
+{
+    [Description("Low Priority")]
+    Low = 1,
+    [Description("Medium Priority")]
+    Medium = 2,
+    [Description("High Priority")]
+    High = 3,
+    [Description("Critical Priority")]
+    Critical = 4
+}
+
+public enum Status
+{
+    [Description("Pending")]
+    Pending = 0,
+    [Description("In Progress")]
+    InProgress = 1,
+    [Description("Completed")]
+    Completed = 2,
+    [Description("Cancelled")]
+    Cancelled = 3
+}
+
+public enum UserRole
+{
+    [Description("Administrator")]
+    Admin = 1,
+    [Description("Manager")]
+    Manager = 2,
+    [Description("User")]
+    User = 3,
+    [Description("Guest")]
+    Guest = 4
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+

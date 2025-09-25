@@ -1,0 +1,149 @@
+@page "/multiple"
+@using Lookif.Component.DropDown.Main
+@using Lookif.Component.DropDown.Basic
+@using Lookif.Component.DropDown.Complex
+<PageTitle>Multiple Choice Dropdown - RTL/LTR Support</PageTitle>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Multiple Choice Dropdown</h1>
+    <p class="text-center text-muted mb-4">Demonstrating RTL and LTR support for multiple selection dropdowns</p>
+
+    <!-- RTL/LTR Demonstration Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>🌍 RTL/LTR Support Demonstration</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>RTL Mode (Default) - Persian Cities</h5>
+                            <p class="text-muted">Arrow on left, text right-aligned</p>
+                            <LFDropDown Multiple="true"
+                                        Records="@persianCities"
+                                        Key="Id"
+                                        Value="Name"
+                                        IsRTL="true"
+                                        SelectedOption="@rtlMultipleSelectedOptions"
+                                        ReturnValueChanged="@OnRTLMultipleSelectionChanged" />
+                            <small class="text-muted">Selected: @(rtlMultipleSelectedText ?? "None")</small>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>LTR Mode - English Cities</h5>
+                            <p class="text-muted">Arrow on right, text left-aligned</p>
+                            <LFDropDown Multiple="true"
+                                        Records="@englishCities"
+                                        Key="Id"
+                                        Value="Name"
+                                        IsRTL="false"
+                                        SelectedOption="@ltrMultipleSelectedOptions"
+                                        ReturnValueChanged="@OnLTRMultipleSelectionChanged" />
+                            <small class="text-muted">Selected: @(ltrMultipleSelectedText ?? "None")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Complex Dropdown (Multiple Choice)</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Enable/Disable Control:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @bind="complexEnabled" @bind:after="StateHasChanged" id="complexEnabled" />
+                            <label class="form-check-label" for="complexEnabled">
+                                Enable Complex Dropdown
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Select Multiple Cities:</label>
+                        <LFDropDown Disable="@(!complexEnabled)"
+                                    Multiple="true"
+                                    Records="@cities"
+                                    Key="Id"
+                                    Value="Name"
+                                    SelectedOption="@complexSelectedOptions"
+                                    ReturnValueChanged="@OnComplexSelectionChanged" />
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Selected:</strong> @(complexSelectedText ?? "None")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Direct Multiple Choice Component</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Select Fruits:</label>
+                        <LFDropDownMultipleChoice Disable="@(!directMultipleEnabled)"
+                                                  Records="@fruits"
+                                                  Key="Id"
+                                                  Value="Name"
+                                                  SelectedOption="@directMultipleSelected"
+                                                  PerformUpdate="@OnDirectMultipleChanged" />
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" @bind="directMultipleEnabled" @bind:after="StateHasChanged" id="directMultipleEnabled" />
+                        <label class="form-check-label" for="directMultipleEnabled">
+                            Enable Direct Multiple Choice
+                        </label>
+                    </div>
+                    <small class="text-muted">Selected: @(directMultipleText ?? "None")</small>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Code Examples</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Multiple Choice with RTL:</h5>
+                    <pre><code>&lt;LFDropDown Multiple="true"
+           Records="@persianCities"
+           Key="Id"
+           Value="Name"
+           IsRTL="true"
+           SelectedOption="@rtlMultipleSelectedOptions"
+           ReturnValueChanged="@OnRTLMultipleSelectionChanged" /&gt;</code></pre>
+
+                    <h5>Multiple Choice with LTR:</h5>
+                    <pre><code>&lt;LFDropDown Multiple="true"
+           Records="@englishCities"
+           Key="Id"
+           Value="Name"
+           IsRTL="false"
+           SelectedOption="@ltrMultipleSelectedOptions"
+           ReturnValueChanged="@OnLTRMultipleSelectionChanged" /&gt;</code></pre>
+
+                    <h5>Direct Multiple Choice Component:</h5>
+                    <pre><code>&lt;LFDropDownMultipleChoice Disable="false"
+                         Records="@fruits"
+                         Key="Id"
+                         Value="Name"
+                         SelectedOption="@directMultipleSelected"
+                         PerformUpdate="@OnDirectMultipleChanged" /&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+

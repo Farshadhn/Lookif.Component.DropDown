@@ -1,5 +1,5 @@
 ﻿@inherits LFDropDownMultipleChoiceBase
-<div class="dropdown-container">
+<div class="dropdown-container @GetDirectionClass()" dir="@GetTextDirection()">
     <div class="dropdown-wrapper">
         <div class="dropdown-selection">
             <div class="dropdown-input-area @(Disable ? "disabled" : "")" 
@@ -26,7 +26,7 @@
                            type="text" 
                            class="search-input" />
                 </div>
-                <div class="dropdown-arrow">
+                <div class="dropdown-arrow arrow-@GetArrowPosition()">
                     <div class="arrow-icon"></div>
                 </div>
             </div>

@@ -1,14 +1,23 @@
 ﻿/* Main dropdown component styles */
 .dropdown-container {
     position: relative;
-    width: 100%;
+        width: 100%;
+}
+
+/* RTL/LTR Support */
+.dropdown-container.rtl {
+    direction: rtl;
+}
+
+.dropdown-container.ltr {
+    direction: ltr;
 }
 
 /* Ensure proper display for dropdown options */
 .options-list {
-    list-style: none;
+        list-style: none;
     margin: 0;
-    padding: 0;
+        padding: 0;
 }
 
 .option-item {
@@ -23,4 +32,24 @@
 
 .option-item:last-child {
     border-bottom: none;
+}
+
+/* RTL Text alignment */
+.dropdown-container.rtl .option-item {
+        text-align: right;
+}
+
+.dropdown-container.ltr .option-item {
+            text-align: left;
+}
+
+/* Additional RTL/LTR text alignment */
+.dropdown-container.rtl .search-input,
+.dropdown-container.rtl .selected-value {
+    text-align: right;
+}
+
+.dropdown-container.ltr .search-input,
+.dropdown-container.ltr .selected-value {
+    text-align: left;
 }

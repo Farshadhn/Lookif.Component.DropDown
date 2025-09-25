@@ -1,0 +1,147 @@
+@page "/single"
+@using Lookif.Component.DropDown.Main
+@using Lookif.Component.DropDown.Basic
+@using Lookif.Component.DropDown.Complex
+<PageTitle>Single Choice Dropdown - RTL/LTR Support</PageTitle>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Single Choice Dropdown</h1>
+    <p class="text-center text-muted mb-4">Demonstrating RTL and LTR support for single selection dropdowns</p>
+
+    <!-- RTL/LTR Demonstration Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>🌍 RTL/LTR Support Demonstration</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>RTL Mode (Default) - Persian Data</h5>
+                            <p class="text-muted">Arrow on left, text right-aligned</p>
+                            <LFDropDown Records="@countries"
+                                        Key="Id"
+                                        Value="Name"
+                                        IsRTL="true"
+                                        SelectedOption="@rtlSelectedOptions"
+                                        ReturnValueChanged="@OnRTLSelectionChanged" />
+                            <small class="text-muted">Selected: @(rtlSelectedText ?? "None")</small>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>LTR Mode - English Data</h5>
+                            <p class="text-muted">Arrow on right, text left-aligned</p>
+                            <LFDropDown Records="@englishCountries"
+                                        Key="Id"
+                                        Value="Name"
+                                        IsRTL="false"
+                                        SelectedOption="@ltrSelectedOptions"
+                                        ReturnValueChanged="@OnLTRSelectionChanged" />
+                            <small class="text-muted">Selected: @(ltrSelectedText ?? "None")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Basic Dropdown (Single Choice)</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Enable/Disable Control:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @bind="basicEnabled" @bind:after="StateHasChanged" id="basicEnabled" />
+                            <label class="form-check-label" for="basicEnabled">
+                                Enable Basic Dropdown
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Select a Country (RTL Default):</label>
+                        @if (countries is { Count: > 0 })
+                        { 
+                            <LFDropDown Records="@countries"
+                                        Key="Id"
+                                        Value="Name"
+                                        SelectedOption="@basicSelectedOptions"
+                                        ReturnValueChanged="@OnBasicSelectionChanged" />
+                        }
+
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Selected:</strong> @(basicSelectedText ?? "None")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Direct Single Choice Component</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Select Colors:</label>
+                        <LFDropDownSingleChoice Disable="@(!directSingleEnabled)"
+                                                Records="@colors"
+                                                Key="Id"
+                                                Value="Name"
+                                                SelectedOption="@directSingleSelected"
+                                                PerformUpdate="@OnDirectSingleChanged" />
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" @bind="directSingleEnabled" @bind:after="StateHasChanged" id="directSingleEnabled" />
+                        <label class="form-check-label" for="directSingleEnabled">
+                            Enable Direct Single Choice
+                        </label>
+                    </div>
+                    <small class="text-muted">Selected: @(directSingleText ?? "None")</small>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Code Examples</h3>
+                </div>
+                <div class="card-body">
+                    <h5>RTL Usage (Default):</h5>
+                    <pre><code>&lt;LFDropDown Records="@countries"
+           Key="Id"
+           Value="Name"
+           IsRTL="true"
+           SelectedOption="@rtlSelectedOptions"
+           ReturnValueChanged="@OnRTLSelectionChanged" /&gt;</code></pre>
+
+                    <h5>LTR Usage:</h5>
+                    <pre><code>&lt;LFDropDown Records="@englishCountries"
+           Key="Id"
+           Value="Name"
+           IsRTL="false"
+           SelectedOption="@ltrSelectedOptions"
+           ReturnValueChanged="@OnLTRSelectionChanged" /&gt;</code></pre>
+
+                    <h5>Direct Component Usage:</h5>
+                    <pre><code>&lt;LFDropDownSingleChoice Disable="false"
+                       Records="@colors"
+                       Key="Id"
+                       Value="Name"
+                       SelectedOption="@directSingleSelected"
+                       PerformUpdate="@OnDirectSingleChanged" /&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+

@@ -2,125 +2,37 @@
 @using Lookif.Component.DropDown.Main
 @using Lookif.Component.DropDown.Basic
 @using Lookif.Component.DropDown.Complex
-<PageTitle>Dropdown Component Samples</PageTitle>
+<PageTitle>Lookif Dropdown Component - Home</PageTitle>
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Lookif Dropdown Component Samples</h1>
+    <h1 class="text-center mb-4">Lookif Dropdown Component</h1>
+    <p class="text-center text-muted mb-4">Comprehensive dropdown component with RTL/LTR support and enum binding</p>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3>Basic Dropdown (Single Choice)</h3>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Enable/Disable Control:</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" @bind="basicEnabled" @bind:after="StateHasChanged" id="basicEnabled" />
-                            <label class="form-check-label" for="basicEnabled">
-                                Enable Basic Dropdown
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Select a Country:</label>
-                        @if (countries is { Count: > 0 })
-                        { 
-                            <LFDropDown Records="@countries"
-                                        Key="Id"
-                                        Value="Name"
-                                        SelectedOption="@basicSelectedOptions"
-                                        ReturnValueChanged="@OnBasicSelectionChanged" />
-                        }
-
-                    </div>
-
-                    <div class="alert alert-info">
-                        <strong>Selected:</strong> @(basicSelectedText ?? "None")
-                    </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Single Choice</h5>
+                    <p class="card-text">RTL and LTR support for single selection dropdowns</p>
+                    <a href="/single" class="btn btn-primary">View Samples</a>
                 </div>
             </div>
         </div>
-
-               <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3>Complex Dropdown (Multiple Choice)</h3>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Enable/Disable Control:</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" @bind="complexEnabled" @bind:after="StateHasChanged" id="complexEnabled" />
-                            <label class="form-check-label" for="complexEnabled">
-                                Enable Complex Dropdown
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Select Multiple Cities:</label>
-                        <LFDropDown Disable="@(!complexEnabled)"
-                                    Multiple="true"
-                                    Records="@cities"
-                                    Key="Id"
-                                    Value="Name"
-                                    SelectedOption="@complexSelectedOptions"
-                                    ReturnValueChanged="@OnComplexSelectionChanged" />
-                    </div>
-
-                    <div class="alert alert-info">
-                        <strong>Selected:</strong> @(complexSelectedText ?? "None")
-                    </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Multiple Choice</h5>
+                    <p class="card-text">RTL and LTR support for multiple selection dropdowns</p>
+                    <a href="/multiple" class="btn btn-primary">View Samples</a>
                 </div>
             </div>
-        </div>  
-    </div>
-
-         <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Direct Component Usage Examples</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Single Choice Component</h5>
-                            <LFDropDownSingleChoice Disable="@(!directSingleEnabled)"
-                                                    Records="@colors"
-                                                    Key="Id"
-                                                    Value="Name"
-                                                    SelectedOption="@directSingleSelected"
-                                                    PerformUpdate="@OnDirectSingleChanged" />
-                            <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" @bind="directSingleEnabled" @bind:after="StateHasChanged" id="directSingleEnabled" />
-                                <label class="form-check-label" for="directSingleEnabled">
-                                    Enable Direct Single Choice
-                                </label>
-                            </div>
-                            <small class="text-muted">Selected: @(directSingleText ?? "None")</small>
-                        </div>
-
-                        <div class="col-md-6">
-                            <h5>Multiple Choice Component</h5>
-                            <LFDropDownMultipleChoice Disable="@(!directMultipleEnabled)"
-                                                      Records="@fruits"
-                                                      Key="Id"
-                                                      Value="Name"
-                                                      SelectedOption="@directMultipleSelected"
-                                                      PerformUpdate="@OnDirectMultipleChanged" />
-                            <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" @bind="directMultipleEnabled" @bind:after="StateHasChanged" id="directMultipleEnabled" />
-                                <label class="form-check-label" for="directMultipleEnabled">
-                                    Enable Direct Multiple Choice
-                                </label>
-                            </div>
-                            <small class="text-muted">Selected: @(directMultipleText ?? "None")</small>
-                        </div>
-                    </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Enum Support</h5>
+                    <p class="card-text">Automatic enum binding with custom display names</p>
+                    <a href="/enum" class="btn btn-primary">View Samples</a>
                 </div>
             </div>
         </div>
@@ -130,42 +42,32 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3>Code Examples</h3>
+                    <h3>Features</h3>
                 </div>
                 <div class="card-body">
-                    <h5>Basic Usage (Single Choice):</h5>
-                    <pre><code>&lt;LFDropDown Disable="false"
-           Records="@countries"
-           Key="Id"
-           Value="Name"
-           SelectedOption="@basicSelectedOptions"
-           ReturnValueChanged="@OnBasicSelectionChanged" /&gt;</code></pre>
-
-                    <h5>Multiple Choice Usage:</h5>
-                    <pre><code>&lt;LFDropDown Disable="false"
-           Multiple="true"
-           Records="@cities"
-           Key="Id"
-           Value="Name"
-           SelectedOption="@complexSelectedOptions"
-           ReturnValueChanged="@OnComplexSelectionChanged" /&gt;</code></pre>
-
-                    <h5>Direct Component Usage:</h5>
-                    <pre><code>&lt;LFDropDownSingleChoice Disable="false"
-                       Records="@colors"
-                       Key="Id"
-                       Value="Name"
-                       SelectedOption="@directSingleSelected"
-                       PerformUpdate="@OnDirectSingleChanged" /&gt;
-
-&lt;LFDropDownMultipleChoice Disable="false"
-                         Records="@fruits"
-                         Key="Id"
-                         Value="Name"
-                         SelectedOption="@directMultipleSelected"
-                         PerformUpdate="@OnDirectMultipleChanged" /&gt;</code></pre>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>RTL/LTR Support</h5>
+                            <ul>
+                                <li>Right-to-Left (RTL) layout support</li>
+                                <li>Left-to-Right (LTR) layout support</li>
+                                <li>Automatic arrow positioning</li>
+                                <li>Text alignment adaptation</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Enum Binding</h5>
+                            <ul>
+                                <li>Automatic enum conversion</li>
+                                <li>Custom display names</li>
+                                <li>Description attribute support</li>
+                                <li>Type-safe enum handling</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+
 </div>
