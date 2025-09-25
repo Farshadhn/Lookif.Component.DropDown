@@ -4,22 +4,28 @@ using Microsoft.JSInterop;
 namespace Lookif.Component.DropDown;
 
 public class LFDropDownJSInterop : IAsyncDisposable
-{
-    private readonly IJSRuntime jsRuntime;
+{ 
+    private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
     public LFDropDownJSInterop(IJSRuntime jsRuntime)
     {
-        this.jsRuntime = jsRuntime;
+        moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
+                "import", "./_content/Lookif.Component.DropDown/LFDropDown.js").AsTask());
+        
     }
 
     public async ValueTask SetOrUnsetInstance(DotNetObjectReference<DropDownBase> dotNetObjectReference, Guid identity, bool IsItSet)
     {
-        await jsRuntime.InvokeVoidAsync("LFDropDown.SetOrUnsetInstance", dotNetObjectReference, identity, IsItSet);
+        var module = await moduleTask.Value;
+        await module.InvokeVoidAsync("SetOrUnsetInstance", dotNetObjectReference, identity, IsItSet); 
     }
 
     public async ValueTask DisposeAsync()
     {
-        // No cleanup needed for window-based JavaScript
-        await Task.CompletedTask;
+        if (moduleTask.IsValueCreated)
+        {
+            var module = await moduleTask.Value;
+            await module.DisposeAsync();
+        }
     }
 }

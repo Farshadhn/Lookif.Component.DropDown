@@ -1,45 +1,51 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>disable</Nullable>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <ImplicitUsings>enable</ImplicitUsings>
-	  <AssemblyVersion>2.0.0</AssemblyVersion>
-	  <FileVersion>2.0.0</FileVersion>
-	  <Version>2.0.0</Version>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AssemblyVersion>2.0.0</AssemblyVersion>
+		<FileVersion>2.0.0</FileVersion>
+		<Version>2.0.0</Version>
+		<RazorClassLibrary>true</RazorClassLibrary>
+		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<IncludeContentInPack>true</IncludeContentInPack>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="wwwroot\**\*.*" Pack="true" PackagePath="Lookif.Component.DropDown" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Basic\LFBasicDropDown.razor.cs" />
+		<Compile Remove="Complex\LFDropDownMultipleChoice.razor.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Basic\LFBasicDropDown.razor.cs" />
-    <Compile Remove="Complex\LFDropDownMultipleChoice.razor.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="Basic\LFBasicDropDown.razor" />
+		<Content Remove="wwwroot\LFDropDown.js" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="Basic\LFBasicDropDown.razor" />
-    <Content Remove="wwwroot\LFDropDown.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Basic\LFBasicDropDown.razor.css" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Basic\LFBasicDropDown.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="wwwroot\LFDropDown.js" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="wwwroot\LFDropDown.js" />
+	</ItemGroup>
 
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.13" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.13" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="Main\LFDropDown.razor" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="Main\LFDropDown.razor" />
+	</ItemGroup>
 
 </Project>
